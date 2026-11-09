@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cuenta Clara · Tus finanzas, por fin claras</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --teal:#0f766e; --teal2:#14b8a6; --amber:#f59e0b; --ink:#0f172a; --muted:#64748b; }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { margin:0; font-family:'Poppins','Segoe UI',Roboto,Arial,sans-serif; color:var(--ink); background:#f8fafc; overflow-x:hidden; }
+  :focus-visible { outline:3px solid var(--amber); outline-offset:3px; }
+
+  nav { position:absolute; top:0; left:0; right:0; z-index:5; display:flex; align-items:center; justify-content:space-between; max-width:1100px; margin:0 auto; padding:22px 24px; }
+  .logo { display:flex; align-items:center; gap:10px; font-weight:800; font-size:22px; color:#fff; text-decoration:none; }
+  .logo i { width:38px; height:38px; border-radius:12px; background:#fff; color:var(--teal); display:grid; place-items:center; font-style:normal; font-size:20px; box-shadow:0 6px 16px rgba(0,0,0,.18); }
+  nav a.pill { color:#fff; text-decoration:none; font-weight:600; font-size:14px; padding:9px 18px; border:1.5px solid rgba(255,255,255,.55); border-radius:999px; }
+
+  .hero { position:relative; background:linear-gradient(135deg,#0b5d57 0%,#0f766e 45%,#14b8a6 100%); color:#fff; padding:130px 24px 150px; overflow:hidden; }
+  .blob { position:absolute; border-radius:50%; opacity:.18; background:#fff; transition:transform .2s ease-out; }
+  .b1 { width:380px; height:380px; top:-120px; right:-100px; }
+  .b2 { width:220px; height:220px; bottom:40px; left:-70px; background:var(--amber); opacity:.25; }
+  .b3 { width:90px; height:90px; top:200px; left:46%; opacity:.12; }
+  .hero-in { position:relative; max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1.1fr .9fr; gap:48px; align-items:center; }
+  .tag { display:inline-block; background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.3); padding:7px 16px; border-radius:999px; font-size:13px; font-weight:600; margin-bottom:20px; }
+  h1 { margin:0 0 18px; font-size:clamp(34px,5.2vw,58px); line-height:1.08; font-weight:800; letter-spacing:-1px; }
+  h1 span { background:linear-gradient(90deg,#fde68a,#fbbf24); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .lead { margin:0 0 22px; font-size:18px; line-height:1.65; color:#d1fae5; max-width:520px; }
+
+  /* Temas */
+  .topics { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 16px; max-width:520px; }
+  .topics p { width:100%; margin:0 0 2px; font-size:14px; font-weight:600; color:#ccfbf1; }
+  .topic { font-family:inherit; font-size:14px; font-weight:600; color:#fff; background:rgba(255,255,255,.12); border:1.5px solid rgba(255,255,255,.35); padding:8px 15px; border-radius:999px; cursor:pointer; transition:all .15s; }
+  .topic:hover { background:rgba(255,255,255,.22); }
+  .topic[aria-pressed="true"] { background:#fff; color:var(--teal); border-color:#fff; }
+
+  .formbar { display:flex; gap:8px; background:#fff; padding:7px; border-radius:999px; box-shadow:0 24px 50px rgba(0,0,0,.28); max-width:520px; }
+  .formbar input { flex:1; min-width:0; border:none; outline:none; padding:0 20px; font-size:16px; font-family:inherit; color:var(--ink); background:transparent; border-radius:999px; }
+  #btn { border:none; cursor:pointer; font-family:inherit; font-weight:700; font-size:16px; color:#fff; padding:16px 28px; border-radius:999px; white-space:nowrap; background-image:linear-gradient(135deg,#f59e0b,#f97316); box-shadow:0 8px 18px rgba(249,115,22,.4); transition:transform .15s; }
+  #btn:hover { transform:translateY(-2px); }
+  #btn:disabled { opacity:.7; cursor:wait; transform:none; }
+  #msg { min-height:24px; margin:14px 0 0 8px; font-size:15px; font-weight:600; }
+  .trust { margin:6px 0 0 8px; font-size:13px; color:#a7f3d0; }
+
+  /* Mockup (reacciona al calculador) */
+  .mock { position:relative; justify-self:center; width:100%; max-width:340px; animation:float 6s ease-in-out infinite; }
+  @keyframes float { 0%,100%{transform:translateY(0) rotate(-2deg);} 50%{transform:translateY(-14px) rotate(-2deg);} }
+  .phone { background:#fff; color:var(--ink); border-radius:30px; padding:22px; box-shadow:0 40px 80px rgba(0,0,0,.35); }
+  .phone small { color:var(--muted); font-size:12px; }
+  .phone .big { font-size:32px; font-weight:800; margin:2px 0 14px; }
+  .phone .big b { color:var(--teal); }
+  .bars { display:flex; align-items:flex-end; gap:9px; height:110px; margin-bottom:16px; }
+  .bars div { flex:1; border-radius:8px 8px 4px 4px; background:linear-gradient(180deg,var(--teal2),var(--teal)); cursor:pointer; transition:height .6s cubic-bezier(.2,.8,.2,1), filter .15s; }
+  .bars div:hover { filter:brightness(1.15); }
+  .row { display:flex; align-items:center; gap:12px; padding:10px 12px; border-radius:14px; background:#f1f5f9; margin-top:8px; font-size:14px; font-weight:600; }
+  .row em { font-style:normal; font-size:20px; }
+  .row span { margin-left:auto; color:var(--teal); }
+  .chip { position:absolute; background:#fff; color:var(--ink); border-radius:16px; padding:10px 14px; font-size:13px; font-weight:700; box-shadow:0 16px 30px rgba(0,0,0,.25); }
+  .chip.c1 { top:-18px; right:-22px; } .chip.c2 { bottom:30px; left:-34px; }
+  .wave { position:absolute; bottom:-1px; left:0; width:100%; height:70px; display:block; }
+
+  .features { max-width:1100px; margin:-60px auto 0; padding:0 24px 40px; position:relative; z-index:3; display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+  .f { background:#fff; border-radius:24px; padding:30px 26px; box-shadow:0 18px 40px rgba(15,23,42,.08); transition:transform .2s; }
+  .f:hover { transform:translateY(-6px); }
+  .f .ic { width:56px; height:56px; border-radius:18px; display:grid; place-items:center; font-size:28px; margin-bottom:16px; }
+  .f h3 { margin:0 0 8px; font-size:19px; }
+  .f p { margin:0; color:var(--muted); font-size:15px; line-height:1.6; }
+
+  /* Calculadora */
+  .calc { max-width:1100px; margin:20px auto 0; padding:0 24px; }
+  .calc-in { background:#fff; border-radius:28px; padding:38px 34px; box-shadow:0 18px 40px rgba(15,23,42,.08); display:grid; grid-template-columns:1fr 1.2fr; gap:36px; align-items:center; }
+  .calc h2 { margin:0 0 8px; font-size:26px; }
+  .calc p.sub { margin:0 0 22px; color:var(--muted); font-size:15px; line-height:1.6; }
+  .calc label { font-size:13px; font-weight:600; color:var(--muted); }
+  .income { font-size:34px; font-weight:800; color:var(--teal); margin:2px 0 8px; }
+  input[type=range] { width:100%; accent-color:var(--teal); height:6px; cursor:pointer; }
+  .split { display:grid; gap:14px; }
+  .sp { display:grid; grid-template-columns:auto 1fr auto; gap:6px 12px; align-items:center; font-size:15px; font-weight:600; }
+  .sp .track { grid-column:1 / -1; height:12px; background:#f1f5f9; border-radius:99px; overflow:hidden; }
+  .sp .fill { height:100%; border-radius:99px; transition:width .5s cubic-bezier(.2,.8,.2,1); }
+  .sp small { color:var(--muted); font-weight:500; }
+  .year { margin-top:20px; background:#fffbeb; border-radius:16px; padding:14px 18px; font-size:15px; color:#78350f; }
+  .year b { color:var(--teal); font-size:18px; }
+
+  /* FAQ */
+  .faq { max-width:760px; margin:50px auto 0; padding:0 24px; }
+  .faq h2 { text-align:center; margin:0 0 20px; font-size:26px; }
+  details { background:#fff; border-radius:18px; padding:4px 22px; margin-bottom:10px; box-shadow:0 8px 20px rgba(15,23,42,.05); }
+  summary { cursor:pointer; font-weight:600; padding:16px 0; list-style:none; display:flex; justify-content:space-between; gap:12px; }
+  summary::-webkit-details-marker { display:none; }
+  summary::after { content:"+"; color:var(--teal); font-size:22px; line-height:1; transition:transform .2s; }
+  details[open] summary::after { transform:rotate(45deg); }
+  details p { margin:0 0 18px; color:var(--muted); line-height:1.65; font-size:15px; }
+
+  .cta2 { max-width:1100px; margin:50px auto 0; padding:0 24px; }
+  .cta2 div { background:linear-gradient(135deg,#0f172a,#134e4a); color:#fff; border-radius:28px; padding:44px 32px; text-align:center; }
+  .cta2 h2 { margin:0 0 10px; font-size:28px; } .cta2 p { margin:0 0 22px; color:#99f6e4; }
+  .cta2 a { display:inline-block; background:var(--amber); color:#fff; font-weight:700; text-decoration:none; padding:14px 30px; border-radius:999px; }
+  footer { text-align:center; color:var(--muted); font-size:13px; padding:34px 24px 40px; }
+
+  /* Toast y confeti */
+  #toast { position:fixed; left:50%; bottom:28px; transform:translate(-50%,120px); background:var(--ink); color:#fff; padding:14px 22px; border-radius:16px; font-weight:600; font-size:15px; z-index:30; transition:transform .35s cubic-bezier(.2,.8,.2,1); max-width:90vw; text-align:center; }
+  #toast.show { transform:translate(-50%,0); }
+  #confetti { position:fixed; inset:0; pointer-events:none; z-index:40; }
+
+  /* Panel plantilla */
+  #tpl { display:none; position:fixed; left:0; right:0; bottom:0; z-index:50; background:#0f172a; padding:16px; box-shadow:0 -10px 30px rgba(0,0,0,.4); }
+  #tpl textarea { width:100%; height:150px; font-family:monospace; font-size:12px; border-radius:10px; border:none; padding:10px; }
+  #tpl button { margin-top:8px; padding:10px 20px; border:none; border-radius:10px; background:var(--amber); color:#fff; font-weight:700; cursor:pointer; font-family:inherit; }
+
+  @media (max-width:860px) {
+    .hero-in, .calc-in { grid-template-columns:1fr; } .mock { max-width:300px; margin-top:20px; }
+    .features { grid-template-columns:1fr; } .hero { padding-bottom:130px; }
+    .chip.c1 { right:-6px; } .chip.c2 { left:-6px; }
+  }
+  @media (max-width:520px) {
+    .formbar { flex-direction:column; border-radius:24px; padding:10px; }
+    .formbar input { padding:14px 14px; } #btn { width:100%; }
+  }
+  @media (prefers-reduced-motion:reduce) { .mock { animation:none; } html { scroll-behavior:auto; } * { transition:none !important; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="#"><i>C</i> Cuenta Clara</a>
+  <a class="pill" href="#suscribirme">Suscríbete</a>
+</nav>
+
+<header class="hero" id="suscribirme">
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+  <div class="hero-in">
+    <div>
+      <span class="tag">💌 Newsletter gratuito</span>
+      <h1>Tus finanzas, <span>por fin claras</span></h1>
+      <p class="lead">Recibe en tu correo consejos simples para organizar tus gastos, ahorrar más y tomar mejores decisiones con tu dinero.</p>
+
+      <div class="topics" id="topics">
+        <p>¿Qué te interesa? (puedes elegir varios)</p>
+        <button type="button" class="topic" aria-pressed="false">📊 Presupuesto</button>
+        <button type="button" class="topic" aria-pressed="false">🐷 Ahorro</button>
+        <button type="button" class="topic" aria-pressed="false">💳 Deudas</button>
+        <button type="button" class="topic" aria-pressed="false">📈 Inversión</button>
+      </div>
+
+      <form id="subscribe-form">
+        <input type="hidden" name="topics" id="topicsInput" value="Presupuesto, Ahorro, Deudas, Inversión">
+        <div class="formbar">
+          <input type="email" name="to_email" placeholder="Escribe tu correo electrónico" required aria-label="Correo electrónico">
+          <button type="submit" id="btn">Suscribirme gratis</button>
+        </div>
+      </form>
+      <p id="msg" role="status"></p>
+      <p class="trust">🔒 Sin spam. Cancelas cuando quieras.</p>
+    </div>
+
+    <div class="mock">
+      <div class="chip c1" id="chip1">🎉 ¡Meta cumplida!</div>
+      <div class="phone">
+        <small>Ahorro del mes</small>
+        <div class="big"><b>$</b> <span id="mockSave">450.000</span></div>
+        <div class="bars" id="bars">
+          <div style="height:35%" data-m="Jun"></div><div style="height:55%" data-m="Jul"></div><div style="height:42%" data-m="Ago"></div>
+          <div style="height:70%" data-m="Sep"></div><div style="height:60%" data-m="Oct"></div><div style="height:92%" data-m="Nov"></div>
+        </div>
+        <div class="row"><em>🛒</em> Mercado <span>-$180.000</span></div>
+        <div class="row"><em>🐷</em> Ahorro <span id="mockRow">+$450.000</span></div>
+      </div>
+      <div class="chip c2">📈 +18% este mes</div>
+    </div>
+  </div>
+  <svg class="wave" viewBox="0 0 1440 80" preserveAspectRatio="none"><path fill="#f8fafc" d="M0,48 C240,90 480,0 720,30 C960,60 1200,90 1440,40 L1440,80 L0,80 Z"/></svg>
+</header>
+
+<section class="features">
+  <div class="f"><div class="ic" style="background:#ccfbf1;">📊</div><h3>Organiza tus gastos</h3><p>Aprende a ordenar tus ingresos y gastos con métodos fáciles que sí puedes seguir.</p></div>
+  <div class="f"><div class="ic" style="background:#fef3c7;">🐷</div><h3>Ideas para ahorrar</h3><p>Trucos prácticos para guardar dinero cada mes sin sentir que te sacrificas.</p></div>
+  <div class="f"><div class="ic" style="background:#ede9fe;">🎁</div><h3>Recursos gratis</h3><p>Plantillas, guías y herramientas exclusivas para quienes se suscriben.</p></div>
+</section>
+
+<section class="calc" aria-labelledby="calcT">
+  <div class="calc-in">
+    <div>
+      <h2 id="calcT">Pruébalo: la regla 50/30/20</h2>
+      <p class="sub">Mueve la barra con tu ingreso mensual y mira cómo repartirlo. El teléfono de arriba se actualiza.</p>
+      <label for="income">Tu ingreso mensual</label>
+      <div class="income" id="incomeTxt">$ 2.500.000</div>
+      <input type="range" id="income" min="1000000" max="10000000" step="100000" value="2500000">
+    </div>
+    <div>
+      <div class="split" id="split"></div>
+      <div class="year">Si ahorras eso cada mes, en un año tendrás <b id="yearSave"></b> 🎯</div>
+    </div>
+  </div>
+</section>
+
+<section class="faq">
+  <h2>Preguntas frecuentes</h2>
+  <details><summary>¿Cuánto cuesta?</summary><p>Nada. El newsletter y los recursos son gratis.</p></details>
+  <details><summary>¿Cada cuánto me escribirán?</summary><p>Una vez por semana, con un consejo corto que puedes aplicar el mismo día.</p></details>
+  <details><summary>¿Puedo cancelar cuando quiera?</summary><p>Sí. Cada correo trae un enlace para cancelar tu suscripción.</p></details>
+</section>
+
+<section class="cta2">
+  <div>
+    <h2>¿Listo para tener claridad con tu dinero?</h2>
+    <p>Únete hoy y recibe tu correo de bienvenida al instante.</p>
+    <a href="#suscribirme">Quiero suscribirme →</a>
+  </div>
+</section>
+
+<footer>© 2026 Cuenta Clara · Bogotá, Colombia</footer>
+
+<div id="toast" role="status"></div>
+<canvas id="confetti"></canvas>
+
+<div id="tpl">
+  <textarea id="tplText" readonly></textarea>
+  <button type="button" id="copyBtn">Copiar plantilla</button>
+</div>
+
+<!-- PLANTILLA DEL CORREO: EmailJS > Email Templates > Code Editor. En "To Email" pon {{to_email}}. Ábrela con #plantilla al final del link. -->
+<script type="text/plain" id="plantilla-email">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Bienvenido a Cuenta Clara</title>
+<style>
+  @media only screen and (max-width:600px) {
+    .wrap { width:100% !important; }
+    .pad { padding-left:22px !important; padding-right:22px !important; }
+    .h1 { font-size:26px !important; }
+    .vote { display:block !important; margin:8px 0 !important; }
+  }
+</style>
+</head>
+<body style="margin:0;padding:0;background-color:#eef2f6;">
+
+<!-- Texto de vista previa (se ve junto al asunto en la bandeja) -->
+<div style="display:none;max-height:0;overflow:hidden;opacity:0;font-size:1px;line-height:1px;color:#eef2f6;">Tu primer consejo para ordenar tu dinero ya está aquí 💚</div>
+
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#eef2f6" style="background-color:#eef2f6;">
+  <tr><td align="center" style="padding:28px 12px;">
+
+    <table role="presentation" class="wrap" width="560" cellpadding="0" cellspacing="0" border="0" style="width:560px;max-width:560px;background-color:#ffffff;border-radius:20px;overflow:hidden;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+
+      <!-- Encabezado -->
+      <tr><td align="center" bgcolor="#0f766e" style="background-color:#0f766e;padding:30px 24px;">
+        <div style="font-size:26px;font-weight:bold;color:#ffffff;letter-spacing:.3px;">Cuenta Clara</div>
+        <div style="margin-top:6px;font-size:13px;color:#ccfbf1;">Finanzas simples</div>
+      </td></tr>
+
+      <!-- Bienvenida -->
+      <tr><td align="center" class="pad" style="padding:38px 40px 6px 40px;">
+        <div style="font-size:44px;line-height:1;">🎉</div>
+        <h1 class="h1" style="margin:14px 0 0 0;font-size:30px;line-height:1.2;color:#0f172a;font-weight:bold;">¡Bienvenido a bordo!</h1>
+        <p style="margin:12px 0 0 0;font-size:16px;line-height:1.6;color:#475569;">Ya estás suscrito con<br><strong style="color:#0f766e;">{{to_email}}</strong></p>
+      </td></tr>
+
+      <!-- Temas elegidos -->
+      <tr><td align="center" class="pad" style="padding:18px 40px 4px 40px;">
+        <p style="margin:0;font-size:14px;line-height:1.6;color:#64748b;">Recibirás contenido sobre</p>
+        <p style="margin:4px 0 0 0;font-size:16px;line-height:1.5;color:#0f172a;font-weight:bold;">{{topics}}</p>
+      </td></tr>
+
+      <!-- Primer consejo -->
+      <tr><td class="pad" style="padding:26px 40px 6px 40px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+          <tr><td bgcolor="#f0fdfa" style="background-color:#f0fdfa;border-left:4px solid #14b8a6;border-radius:10px;padding:18px 20px;">
+            <div style="font-size:13px;font-weight:bold;color:#0f766e;">Tu primer consejo</div>
+            <div style="margin-top:6px;font-size:16px;line-height:1.6;color:#0f172a;">Reparte tu ingreso así: <strong>50%</strong> para lo necesario, <strong>30%</strong> para tus gustos y <strong>20%</strong> para ahorrar.</div>
+          </td></tr>
+        </table>
+      </td></tr>
+
+      <!-- Votación -->
+      <tr><td align="center" class="pad" style="padding:30px 40px 6px 40px;">
+        <p style="margin:0 0 12px 0;font-size:16px;font-weight:bold;color:#0f172a;">¿Qué quieres aprender primero?</p>
+        <a class="vote" href="https://samuelrb17.github.io/cuenta-Clara/#voto-gastos" style="display:inline-block;margin:4px;background-color:#f0fdfa;color:#0f766e;border:1px solid #99f6e4;text-decoration:none;font-size:14px;font-weight:bold;padding:10px 18px;border-radius:999px;">📊 Gastos</a>
+        <a class="vote" href="https://samuelrb17.github.io/cuenta-Clara/#voto-ahorro" style="display:inline-block;margin:4px;background-color:#fffbeb;color:#b45309;border:1px solid #fde68a;text-decoration:none;font-size:14px;font-weight:bold;padding:10px 18px;border-radius:999px;">🐷 Ahorro</a>
+        <a class="vote" href="https://samuelrb17.github.io/cuenta-Clara/#voto-deudas" style="display:inline-block;margin:4px;background-color:#f5f3ff;color:#6d28d9;border:1px solid #ddd6fe;text-decoration:none;font-size:14px;font-weight:bold;padding:10px 18px;border-radius:999px;">💳 Deudas</a>
+      </td></tr>
+
+      <!-- Botón principal -->
+      <tr><td align="center" class="pad" style="padding:26px 40px 10px 40px;">
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+          <td align="center" bgcolor="#f59e0b" style="background-color:#f59e0b;border-radius:999px;">
+            <a href="https://samuelrb17.github.io/cuenta-Clara/" style="display:inline-block;padding:15px 36px;font-size:16px;font-weight:bold;color:#ffffff;text-decoration:none;border-radius:999px;">Probar la calculadora</a>
+          </td>
+        </tr></table>
+      </td></tr>
+
+      <!-- Despedida -->
+      <tr><td class="pad" style="padding:24px 40px 32px 40px;">
+        <div style="border-top:1px solid #e2e8f0;padding-top:20px;text-align:center;font-size:15px;line-height:1.6;color:#475569;">
+          Nos alegra tenerte con nosotros. 💚<br>
+          <strong style="color:#0f172a;">El equipo de Cuenta Clara</strong>
+        </div>
+      </td></tr>
+
+      <!-- Pie -->
+      <tr><td align="center" bgcolor="#0f172a" style="background-color:#0f172a;padding:22px 28px;">
+        <div style="font-size:12px;line-height:1.8;color:#94a3b8;">
+          Recibes este correo porque te suscribiste en nuestra web.<br>
+          Para cancelar, responde a este correo con la palabra CANCELAR.<br>
+          © 2026 Cuenta Clara · Bogotá, Colombia
+        </div>
+      </td></tr>
+
+    </table>
+
+  </td></tr>
+</table>
+</body>
+</html>
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  // ====== EMAILJS ======
+  // Solo la Public Key va aquí. La Private Key NUNCA debe ir en el código de una página web.
+  const PUBLIC_KEY  = "OB8-TwxvEElA-012s";
+  const SERVICE_ID  = "service_v0fwwx5";   // EmailJS > Email Services
+  const TEMPLATE_ID = "template_qondilf";  // EmailJS > Email Templates
+
+  emailjs.init({ publicKey: PUBLIC_KEY });
+
+  const $ = id => document.getElementById(id);
+  const money = n => "$ " + Math.round(n).toLocaleString("es-CO");
+
+  // Toast
+  let tt;
+  function toast(t){ const el=$("toast"); el.textContent=t; el.classList.add("show"); clearTimeout(tt); tt=setTimeout(()=>el.classList.remove("show"),3500); }
+
+  // Temas elegidos -> campo oculto {{topics}}
+  const chips = [...document.querySelectorAll(".topic")];
+  chips.forEach(c => c.addEventListener("click", () => {
+    c.setAttribute("aria-pressed", c.getAttribute("aria-pressed")==="true" ? "false" : "true");
+    const sel = chips.filter(x=>x.getAttribute("aria-pressed")==="true").map(x=>x.textContent.replace(/^\S+\s/,""));
+    $("topicsInput").value = sel.length ? sel.join(", ") : "Presupuesto, Ahorro, Deudas, Inversión";
+  }));
+
+  // Calculadora 50/30/20
+  const rules = [
+    {n:"Necesidades", p:.5, c:"#0f766e", e:"🏠"},
+    {n:"Gustos", p:.3, c:"#f59e0b", e:"🎉"},
+    {n:"Ahorro", p:.2, c:"#8b5cf6", e:"🐷"}
+  ];
+  $("split").innerHTML = rules.map((r,i)=>`<div class="sp"><span>${r.e} ${r.n}</span><small>${r.p*100}%</small><span id="v${i}"></span><div class="track"><div class="fill" id="f${i}" style="width:${r.p*100}%;background:${r.c}"></div></div></div>`).join("");
+  function calc(){
+    const inc = +$("income").value;
+    $("incomeTxt").textContent = money(inc);
+    rules.forEach((r,i)=>$("v"+i).textContent = money(inc*r.p));
+    const save = inc*.2;
+    $("yearSave").textContent = money(save*12);
+    const s = Math.round(save).toLocaleString("es-CO");
+    $("mockSave").textContent = s;
+    $("mockRow").textContent = "+$" + s;
+    // barras del teléfono: crecen hacia el ahorro actual
+    const bars = [...document.querySelectorAll("#bars div")];
+    const base = [.38,.58,.46,.72,.62,.95];
+    const k = .55 + (inc-1e6)/9e6*.45;
+    bars.forEach((b,i)=> b.style.height = Math.min(98, base[i]*k*100) + "%");
+  }
+  $("income").addEventListener("input", calc);
+  calc();
+
+  // Barras clicables
+  document.querySelectorAll("#bars div").forEach(b => b.addEventListener("click", () => toast("Ahorro de " + b.dataset.m + ": " + $("mockSave").textContent)));
+
+  // Parallax suave de las burbujas (solo escritorio)
+  if (matchMedia("(hover:hover)").matches && !matchMedia("(prefers-reduced-motion:reduce)").matches) {
+    document.querySelector(".hero").addEventListener("mousemove", e => {
+      const x=(e.clientX/innerWidth-.5), y=(e.clientY/innerHeight-.5);
+      document.querySelectorAll(".blob").forEach((b,i)=> b.style.transform = `translate(${x*(i+1)*18}px,${y*(i+1)*18}px)`);
+    });
+  }
+
+  // Confeti
+  function confetti(){
+    if (matchMedia("(prefers-reduced-motion:reduce)").matches) return;
+    const cv=$("confetti"), ctx=cv.getContext("2d"); cv.width=innerWidth; cv.height=innerHeight;
+    const cols=["#14b8a6","#f59e0b","#f97316","#8b5cf6","#fde68a"];
+    const ps=Array.from({length:110},()=>({x:innerWidth/2,y:innerHeight*.45,vx:(Math.random()-.5)*14,vy:Math.random()*-13-3,s:Math.random()*7+4,c:cols[Math.random()*5|0],r:Math.random()*6}));
+    let f=0;
+    (function step(){
+      ctx.clearRect(0,0,cv.width,cv.height);
+      ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.4;p.r+=.2;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.r);ctx.fillStyle=p.c;ctx.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6);ctx.restore();});
+      if(++f<110) requestAnimationFrame(step); else ctx.clearRect(0,0,cv.width,cv.height);
+    })();
+  }
+
+  // Envío del formulario
+  $("subscribe-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const form = this, btn = $("btn"), msg = $("msg");
+    const email = form.elements["to_email"].value.trim();
+    btn.disabled = true; btn.textContent = "Enviando...";
+    msg.textContent = "";
+    // Se mandan varios nombres del mismo dato para que funcione sin importar cómo configuraste "To Email"
+    const params = { to_email: email, email: email, user_email: email, reply_to: email, topics: $("topicsInput").value };
+    emailjs.send(SERVICE_ID, TEMPLATE_ID, params)
+      .then(() => {
+        msg.textContent = "¡Listo! Revisa tu correo (y la carpeta de spam) 📬"; msg.style.color = "#bbf7d0";
+        form.reset(); confetti();
+        $("chip1").textContent = "🎉 ¡Ya eres parte!";
+      })
+      .catch(err => {
+        console.error("EmailJS error:", err);
+        const why = (err && (err.text || err.message)) || "error desconocido";
+        msg.textContent = "No se pudo enviar: " + why; msg.style.color = "#fecaca";
+      })
+      .finally(() => { btn.disabled = false; btn.textContent = "Suscribirme gratis"; });
+  });
+
+  // Votos que llegan desde el correo (#voto-gastos, etc.)
+  if (location.hash.startsWith("#voto-")) {
+    const v = location.hash.slice(6);
+    toast("¡Gracias por votar por " + v + "! Lo tendremos en cuenta 💚");
+    history.replaceState(null, "", location.pathname);
+  }
+
+  // Modo plantilla: abre la página con #plantilla
+  if (location.hash === "#plantilla") {
+    const txt = $("tplText");
+    $("tpl").style.display = "block";
+    txt.value = $("plantilla-email").textContent.trim();
+    $("copyBtn").onclick = function () { txt.select(); navigator.clipboard.writeText(txt.value); this.textContent = "¡Copiada!"; };
+  }
+</script>
+</body>
+</html>

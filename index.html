@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root { --teal:#0f766e; --teal2:#14b8a6; --amber:#f59e0b; --ink:#0f172a; --muted:#64748b; }
+  :root { --teal:#0f766e; --teal2:#14b8a6; --amber:#f59e0b; --violet:#8b5cf6; --ink:#0f172a; --muted:#64748b; }
   * { box-sizing:border-box; }
   html { scroll-behavior:smooth; }
   body { margin:0; font-family:'Poppins','Segoe UI',Roboto,Arial,sans-serif; color:var(--ink); background:#f8fafc; overflow-x:hidden; }
@@ -16,79 +16,106 @@
 
   nav { position:absolute; top:0; left:0; right:0; z-index:5; display:flex; align-items:center; justify-content:space-between; max-width:1100px; margin:0 auto; padding:22px 24px; }
   .logo { display:flex; align-items:center; gap:10px; font-weight:800; font-size:22px; color:#fff; text-decoration:none; }
-  .logo i { width:38px; height:38px; border-radius:12px; background:#fff; color:var(--teal); display:grid; place-items:center; font-style:normal; font-size:20px; box-shadow:0 6px 16px rgba(0,0,0,.18); }
-  nav a.pill { color:#fff; text-decoration:none; font-weight:600; font-size:14px; padding:9px 18px; border:1.5px solid rgba(255,255,255,.55); border-radius:999px; }
+  .logo i { width:38px; height:38px; border-radius:12px; background:#fff; color:var(--teal); display:grid; place-items:center; font-style:normal; font-size:20px; box-shadow:0 6px 16px rgba(0,0,0,.18); animation:wiggle 5s ease-in-out infinite; }
+  @keyframes wiggle { 0%,88%,100%{transform:rotate(0);} 92%{transform:rotate(-12deg) scale(1.1);} 96%{transform:rotate(10deg) scale(1.1);} }
+  nav a.pill { color:#fff; text-decoration:none; font-weight:600; font-size:14px; padding:9px 18px; border:1.5px solid rgba(255,255,255,.55); border-radius:999px; transition:background .2s,color .2s; }
+  nav a.pill:hover { background:#fff; color:var(--teal); }
 
-  .hero { position:relative; background:linear-gradient(135deg,#0b5d57 0%,#0f766e 45%,#14b8a6 100%); color:#fff; padding:130px 24px 150px; overflow:hidden; }
+  /* HERO animado */
+  .hero { position:relative; background:linear-gradient(125deg,#0b5d57,#0f766e,#14b8a6,#0d9488,#0b5d57); background-size:300% 300%; animation:shift 14s ease infinite; color:#fff; padding:130px 24px 160px; overflow:hidden; }
+  @keyframes shift { 0%,100%{background-position:0% 50%;} 50%{background-position:100% 50%;} }
   .blob { position:absolute; border-radius:50%; opacity:.18; background:#fff; transition:transform .2s ease-out; }
   .b1 { width:380px; height:380px; top:-120px; right:-100px; }
   .b2 { width:220px; height:220px; bottom:40px; left:-70px; background:var(--amber); opacity:.25; }
   .b3 { width:90px; height:90px; top:200px; left:46%; opacity:.12; }
+  .coin { position:absolute; font-size:30px; opacity:.55; animation:bob 7s ease-in-out infinite; pointer-events:none; filter:drop-shadow(0 6px 8px rgba(0,0,0,.2)); }
+  @keyframes bob { 0%,100%{transform:translateY(0) rotate(-8deg);} 50%{transform:translateY(-26px) rotate(10deg);} }
   .hero-in { position:relative; max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1.1fr .9fr; gap:48px; align-items:center; }
   .tag { display:inline-block; background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.3); padding:7px 16px; border-radius:999px; font-size:13px; font-weight:600; margin-bottom:20px; }
   h1 { margin:0 0 18px; font-size:clamp(34px,5.2vw,58px); line-height:1.08; font-weight:800; letter-spacing:-1px; }
-  h1 span { background:linear-gradient(90deg,#fde68a,#fbbf24); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  h1 span { background:linear-gradient(90deg,#fde68a,#fbbf24,#fb923c); -webkit-background-clip:text; background-clip:text; color:transparent; display:inline-block; transition:opacity .35s, transform .35s; }
+  h1 span.out { opacity:0; transform:translateY(14px); }
   .lead { margin:0 0 22px; font-size:18px; line-height:1.65; color:#d1fae5; max-width:520px; }
 
-  /* Temas */
   .topics { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 16px; max-width:520px; }
   .topics p { width:100%; margin:0 0 2px; font-size:14px; font-weight:600; color:#ccfbf1; }
-  .topic { font-family:inherit; font-size:14px; font-weight:600; color:#fff; background:rgba(255,255,255,.12); border:1.5px solid rgba(255,255,255,.35); padding:8px 15px; border-radius:999px; cursor:pointer; transition:all .15s; }
-  .topic:hover { background:rgba(255,255,255,.22); }
-  .topic[aria-pressed="true"] { background:#fff; color:var(--teal); border-color:#fff; }
+  .topic { font-family:inherit; font-size:14px; font-weight:600; color:#fff; background:rgba(255,255,255,.12); border:1.5px solid rgba(255,255,255,.35); padding:8px 15px; border-radius:999px; cursor:pointer; transition:all .18s; }
+  .topic:hover { background:rgba(255,255,255,.22); transform:translateY(-2px); }
+  .topic[aria-pressed="true"] { background:#fff; color:var(--teal); border-color:#fff; transform:scale(1.06); box-shadow:0 8px 18px rgba(0,0,0,.2); }
 
-  .formbar { display:flex; gap:8px; background:#fff; padding:7px; border-radius:999px; box-shadow:0 24px 50px rgba(0,0,0,.28); max-width:520px; }
+  .formbar { display:flex; gap:8px; background:#fff; padding:7px; border-radius:999px; box-shadow:0 24px 50px rgba(0,0,0,.28); max-width:520px; transition:box-shadow .2s, transform .2s; }
+  .formbar:focus-within { box-shadow:0 0 0 4px rgba(253,230,138,.55), 0 24px 50px rgba(0,0,0,.28); transform:translateY(-2px); }
   .formbar input { flex:1; min-width:0; border:none; outline:none; padding:0 20px; font-size:16px; font-family:inherit; color:var(--ink); background:transparent; border-radius:999px; }
-  #btn { border:none; cursor:pointer; font-family:inherit; font-weight:700; font-size:16px; color:#fff; padding:16px 28px; border-radius:999px; white-space:nowrap; background-image:linear-gradient(135deg,#f59e0b,#f97316); box-shadow:0 8px 18px rgba(249,115,22,.4); transition:transform .15s; }
-  #btn:hover { transform:translateY(-2px); }
+  #btn { position:relative; overflow:hidden; border:none; cursor:pointer; font-family:inherit; font-weight:700; font-size:16px; color:#fff; padding:16px 28px; border-radius:999px; white-space:nowrap; background-image:linear-gradient(135deg,#f59e0b,#f97316); box-shadow:0 8px 18px rgba(249,115,22,.4); transition:transform .15s; }
+  #btn::after { content:""; position:absolute; top:0; left:-60%; width:40%; height:100%; background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent); transform:skewX(-20deg); animation:shine 3.5s ease-in-out infinite; }
+  @keyframes shine { 0%,55%{left:-60%;} 100%{left:130%;} }
+  #btn:hover { transform:translateY(-2px) scale(1.03); }
   #btn:disabled { opacity:.7; cursor:wait; transform:none; }
   #msg { min-height:24px; margin:14px 0 0 8px; font-size:15px; font-weight:600; }
   .trust { margin:6px 0 0 8px; font-size:13px; color:#a7f3d0; }
 
-  /* Mockup (reacciona al calculador) */
+  /* Mockup */
   .mock { position:relative; justify-self:center; width:100%; max-width:340px; animation:float 6s ease-in-out infinite; }
   @keyframes float { 0%,100%{transform:translateY(0) rotate(-2deg);} 50%{transform:translateY(-14px) rotate(-2deg);} }
-  .phone { background:#fff; color:var(--ink); border-radius:30px; padding:22px; box-shadow:0 40px 80px rgba(0,0,0,.35); }
-  .phone small { color:var(--muted); font-size:12px; }
+  .phone { background:#fff; color:var(--ink); border-radius:30px; padding:22px; box-shadow:0 40px 80px rgba(0,0,0,.35); border:6px solid #f1f5f9; }
+  .phone small { color:var(--muted); font-size:12px; display:flex; align-items:center; gap:6px; }
+  .live { width:8px; height:8px; border-radius:50%; background:#22c55e; animation:pulse 1.6s infinite; }
+  @keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(34,197,94,.6);} 100%{box-shadow:0 0 0 10px rgba(34,197,94,0);} }
   .phone .big { font-size:32px; font-weight:800; margin:2px 0 14px; }
   .phone .big b { color:var(--teal); }
   .bars { display:flex; align-items:flex-end; gap:9px; height:110px; margin-bottom:16px; }
   .bars div { flex:1; border-radius:8px 8px 4px 4px; background:linear-gradient(180deg,var(--teal2),var(--teal)); cursor:pointer; transition:height .6s cubic-bezier(.2,.8,.2,1), filter .15s; }
+  .bars div:last-child { background:linear-gradient(180deg,#fbbf24,#f97316); }
   .bars div:hover { filter:brightness(1.15); }
   .row { display:flex; align-items:center; gap:12px; padding:10px 12px; border-radius:14px; background:#f1f5f9; margin-top:8px; font-size:14px; font-weight:600; }
   .row em { font-style:normal; font-size:20px; }
   .row span { margin-left:auto; color:var(--teal); }
-  .chip { position:absolute; background:#fff; color:var(--ink); border-radius:16px; padding:10px 14px; font-size:13px; font-weight:700; box-shadow:0 16px 30px rgba(0,0,0,.25); }
-  .chip.c1 { top:-18px; right:-22px; } .chip.c2 { bottom:30px; left:-34px; }
+  .chip { position:absolute; background:#fff; color:var(--ink); border-radius:16px; padding:10px 14px; font-size:13px; font-weight:700; box-shadow:0 16px 30px rgba(0,0,0,.25); animation:bob 5s ease-in-out infinite; }
+  .chip.c1 { top:-18px; right:-22px; } .chip.c2 { bottom:30px; left:-34px; animation-delay:-2.5s; }
   .wave { position:absolute; bottom:-1px; left:0; width:100%; height:70px; display:block; }
 
-  .features { max-width:1100px; margin:-60px auto 0; padding:0 24px 40px; position:relative; z-index:3; display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
-  .f { background:#fff; border-radius:24px; padding:30px 26px; box-shadow:0 18px 40px rgba(15,23,42,.08); transition:transform .2s; }
-  .f:hover { transform:translateY(-6px); }
-  .f .ic { width:56px; height:56px; border-radius:18px; display:grid; place-items:center; font-size:28px; margin-bottom:16px; }
+  /* Cinta */
+  .ticker { background:var(--ink); color:#fde68a; overflow:hidden; white-space:nowrap; padding:13px 0; font-weight:600; font-size:14px; transform:rotate(-1deg); margin:-30px -10px 0; position:relative; z-index:4; box-shadow:0 10px 30px rgba(15,23,42,.25); }
+  .ticker div { display:inline-block; animation:tick 28s linear infinite; }
+  .ticker span { margin:0 22px; }
+  @keyframes tick { to { transform:translateX(-50%); } }
+
+  .features { max-width:1100px; margin:50px auto 0; padding:0 24px 40px; position:relative; z-index:3; display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+  .f { position:relative; background:#fff; border-radius:24px; padding:30px 26px; box-shadow:0 18px 40px rgba(15,23,42,.08); transition:transform .25s, box-shadow .25s; overflow:hidden; }
+  .f::before { content:""; position:absolute; left:0; right:0; top:0; height:5px; background:var(--a); }
+  .f:hover { transform:translateY(-8px) rotate(-.6deg); box-shadow:0 28px 50px rgba(15,23,42,.14); }
+  .f .ic { width:56px; height:56px; border-radius:18px; display:grid; place-items:center; font-size:28px; margin-bottom:16px; transition:transform .3s; }
+  .f:hover .ic { transform:scale(1.18) rotate(-8deg); }
   .f h3 { margin:0 0 8px; font-size:19px; }
   .f p { margin:0; color:var(--muted); font-size:15px; line-height:1.6; }
 
   /* Calculadora */
   .calc { max-width:1100px; margin:20px auto 0; padding:0 24px; }
-  .calc-in { background:#fff; border-radius:28px; padding:38px 34px; box-shadow:0 18px 40px rgba(15,23,42,.08); display:grid; grid-template-columns:1fr 1.2fr; gap:36px; align-items:center; }
+  .calc-in { background:#fff; border-radius:28px; padding:38px 34px; box-shadow:0 18px 40px rgba(15,23,42,.08); display:grid; grid-template-columns:1fr 1.2fr; gap:36px; align-items:center; border:2px dashed #99f6e4; }
   .calc h2 { margin:0 0 8px; font-size:26px; }
   .calc p.sub { margin:0 0 22px; color:var(--muted); font-size:15px; line-height:1.6; }
   .calc label { font-size:13px; font-weight:600; color:var(--muted); }
   .income { font-size:34px; font-weight:800; color:var(--teal); margin:2px 0 8px; }
   input[type=range] { width:100%; accent-color:var(--teal); height:6px; cursor:pointer; }
-  .split { display:grid; gap:14px; }
+  .ringwrap { display:flex; align-items:center; gap:22px; margin-bottom:20px; }
+  .ring { flex:none; width:128px; height:128px; border-radius:50%; background:conic-gradient(#0f766e 0 50%, #f59e0b 50% 80%, #8b5cf6 80% 100%); display:grid; place-items:center; animation:spin .9s cubic-bezier(.2,.8,.2,1); }
+  @keyframes spin { from { transform:rotate(-200deg) scale(.6); opacity:0; } }
+  .ring div { width:88px; height:88px; border-radius:50%; background:#fff; display:grid; place-items:center; text-align:center; font-size:12px; color:var(--muted); font-weight:600; line-height:1.2; }
+  .ring b { display:block; font-size:24px; color:var(--violet); }
+  .split { display:grid; gap:14px; flex:1; }
   .sp { display:grid; grid-template-columns:auto 1fr auto; gap:6px 12px; align-items:center; font-size:15px; font-weight:600; }
   .sp .track { grid-column:1 / -1; height:12px; background:#f1f5f9; border-radius:99px; overflow:hidden; }
   .sp .fill { height:100%; border-radius:99px; transition:width .5s cubic-bezier(.2,.8,.2,1); }
   .sp small { color:var(--muted); font-weight:500; }
-  .year { margin-top:20px; background:#fffbeb; border-radius:16px; padding:14px 18px; font-size:15px; color:#78350f; }
+  .year { background:#fffbeb; border-radius:16px; padding:14px 18px; font-size:15px; color:#78350f; }
   .year b { color:var(--teal); font-size:18px; }
 
   /* FAQ */
   .faq { max-width:760px; margin:50px auto 0; padding:0 24px; }
   .faq h2 { text-align:center; margin:0 0 20px; font-size:26px; }
-  details { background:#fff; border-radius:18px; padding:4px 22px; margin-bottom:10px; box-shadow:0 8px 20px rgba(15,23,42,.05); }
+  details { background:#fff; border-radius:18px; padding:4px 22px; margin-bottom:10px; box-shadow:0 8px 20px rgba(15,23,42,.05); border-left:5px solid transparent; transition:border-color .2s, transform .2s; }
+  details:hover { transform:translateX(4px); }
+  details[open] { border-left-color:var(--teal2); }
   summary { cursor:pointer; font-weight:600; padding:16px 0; list-style:none; display:flex; justify-content:space-between; gap:12px; }
   summary::-webkit-details-marker { display:none; }
   summary::after { content:"+"; color:var(--teal); font-size:22px; line-height:1; transition:transform .2s; }
@@ -96,34 +123,72 @@
   details p { margin:0 0 18px; color:var(--muted); line-height:1.65; font-size:15px; }
 
   .cta2 { max-width:1100px; margin:50px auto 0; padding:0 24px; }
-  .cta2 div { background:linear-gradient(135deg,#0f172a,#134e4a); color:#fff; border-radius:28px; padding:44px 32px; text-align:center; }
+  .cta2 div { position:relative; overflow:hidden; background:linear-gradient(135deg,#0f172a,#134e4a); color:#fff; border-radius:28px; padding:48px 32px; text-align:center; }
+  .cta2 div::before, .cta2 div::after { content:"💰"; position:absolute; font-size:54px; opacity:.18; animation:bob 8s ease-in-out infinite; }
+  .cta2 div::before { left:6%; top:18%; } .cta2 div::after { content:"📈"; right:7%; bottom:14%; animation-delay:-3s; }
   .cta2 h2 { margin:0 0 10px; font-size:28px; } .cta2 p { margin:0 0 22px; color:#99f6e4; }
-  .cta2 a { display:inline-block; background:var(--amber); color:#fff; font-weight:700; text-decoration:none; padding:14px 30px; border-radius:999px; }
+  .cta2 a { display:inline-block; background:linear-gradient(135deg,#f59e0b,#f97316); color:#fff; font-weight:700; text-decoration:none; padding:14px 30px; border-radius:999px; box-shadow:0 10px 22px rgba(249,115,22,.4); transition:transform .15s; }
+  .cta2 a:hover { transform:translateY(-3px) scale(1.04); }
   footer { text-align:center; color:var(--muted); font-size:13px; padding:34px 24px 40px; }
 
-  /* Toast y confeti */
+  /* Pantalla de carga */
+  #loader { position:fixed; inset:0; z-index:100; display:grid; place-items:center; background:linear-gradient(135deg,#0b5d57,#0f766e 55%,#14b8a6); color:#fff; transition:transform .85s cubic-bezier(.77,0,.18,1); animation:ldfail .01s 5s forwards; }
+  #loader.done { transform:translateY(-100%); }
+  @keyframes ldfail { to { visibility:hidden; } }
+  .ld-box { position:relative; text-align:center; padding-top:70px; }
+  .ld-coin { position:absolute; top:0; left:50%; font-size:28px; margin-left:-14px; opacity:0; animation:ldrop 1.2s ease-in infinite; }
+  .ld-coin:nth-child(2) { margin-left:-48px; animation-delay:.4s; } .ld-coin:nth-child(3) { margin-left:20px; animation-delay:.8s; }
+  @keyframes ldrop { 0%{transform:translateY(-10px) rotate(0);opacity:0;} 25%{opacity:1;} 85%{transform:translateY(72px) rotate(200deg);opacity:1;} 100%{transform:translateY(80px) rotate(220deg);opacity:0;} }
+  .ld-logo { width:84px; height:84px; border-radius:26px; background:#fff; color:var(--teal); font-size:44px; font-weight:800; display:grid; place-items:center; margin:0 auto 18px; box-shadow:0 18px 40px rgba(0,0,0,.28); animation:ldpop 1.2s ease-in-out infinite; }
+  @keyframes ldpop { 0%,100%{transform:translateY(0) scale(1);} 50%{transform:translateY(-8px) scale(1.07);} }
+  .ld-name { font-size:26px; font-weight:800; letter-spacing:-.5px; }
+  .ld-bar { width:220px; height:8px; margin:18px auto 12px; border-radius:99px; background:rgba(255,255,255,.22); overflow:hidden; }
+  .ld-bar i { display:block; height:100%; width:0; border-radius:99px; background:linear-gradient(90deg,#fde68a,#f59e0b,#f97316); animation:ldfill 1.8s cubic-bezier(.4,0,.2,1) forwards; }
+  @keyframes ldfill { to { width:100%; } }
+  #ldTxt { font-size:14px; font-weight:500; color:#ccfbf1; min-height:21px; }
+  /* Entrada del hero (sin depender de JS) */
+  .hero-in > div:first-child { animation:heroin .9s 1.9s cubic-bezier(.2,.8,.2,1) both; }
+  @keyframes heroin { from { opacity:0; transform:translateY(34px); } }
+  .mock { animation:float 6s ease-in-out infinite, fadein .9s 2.1s both; }
+  @keyframes fadein { from { opacity:0; } }
+
+  /* Entrada al hacer scroll */
+  .rv { opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s cubic-bezier(.2,.8,.2,1); }
+  .rv.in { opacity:1; transform:none; }
+  .features .f:nth-child(2) { transition-delay:.12s; } .features .f:nth-child(3) { transition-delay:.24s; }
+
   #toast { position:fixed; left:50%; bottom:28px; transform:translate(-50%,120px); background:var(--ink); color:#fff; padding:14px 22px; border-radius:16px; font-weight:600; font-size:15px; z-index:30; transition:transform .35s cubic-bezier(.2,.8,.2,1); max-width:90vw; text-align:center; }
   #toast.show { transform:translate(-50%,0); }
   #confetti { position:fixed; inset:0; pointer-events:none; z-index:40; }
 
-  /* Panel plantilla */
   #tpl { display:none; position:fixed; left:0; right:0; bottom:0; z-index:50; background:#0f172a; padding:16px; box-shadow:0 -10px 30px rgba(0,0,0,.4); }
   #tpl textarea { width:100%; height:150px; font-family:monospace; font-size:12px; border-radius:10px; border:none; padding:10px; }
   #tpl button { margin-top:8px; padding:10px 20px; border:none; border-radius:10px; background:var(--amber); color:#fff; font-weight:700; cursor:pointer; font-family:inherit; }
 
   @media (max-width:860px) {
     .hero-in, .calc-in { grid-template-columns:1fr; } .mock { max-width:300px; margin-top:20px; }
-    .features { grid-template-columns:1fr; } .hero { padding-bottom:130px; }
+    .features { grid-template-columns:1fr; } .hero { padding-bottom:140px; }
     .chip.c1 { right:-6px; } .chip.c2 { left:-6px; }
   }
   @media (max-width:520px) {
     .formbar { flex-direction:column; border-radius:24px; padding:10px; }
     .formbar input { padding:14px 14px; } #btn { width:100%; }
+    .ringwrap { flex-direction:column; align-items:stretch; } .ring { align-self:center; }
   }
-  @media (prefers-reduced-motion:reduce) { .mock { animation:none; } html { scroll-behavior:auto; } * { transition:none !important; } }
+  @media (prefers-reduced-motion:reduce) { *, *::before, *::after { animation:none !important; transition:none !important; } html { scroll-behavior:auto; } .rv { opacity:1; transform:none; } }
 </style>
 </head>
 <body>
+
+<div id="loader" role="status" aria-label="Cargando">
+  <div class="ld-box">
+    <span class="ld-coin">🪙</span><span class="ld-coin">🪙</span><span class="ld-coin">🪙</span>
+    <div class="ld-logo">C</div>
+    <div class="ld-name">Cuenta Clara</div>
+    <div class="ld-bar"><i></i></div>
+    <div id="ldTxt">Contando monedas…</div>
+  </div>
+</div>
 
 <nav>
   <a class="logo" href="#"><i>C</i> Cuenta Clara</a>
@@ -132,10 +197,14 @@
 
 <header class="hero" id="suscribirme">
   <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+  <span class="coin" style="top:16%;left:6%">🪙</span>
+  <span class="coin" style="top:62%;left:42%;animation-delay:-2s;font-size:24px">💸</span>
+  <span class="coin" style="top:12%;right:9%;animation-delay:-4s;font-size:36px">💰</span>
+  <span class="coin" style="bottom:22%;right:6%;animation-delay:-1s;font-size:26px">🪙</span>
   <div class="hero-in">
     <div>
       <span class="tag">💌 Newsletter gratuito</span>
-      <h1>Tus finanzas, <span>por fin claras</span></h1>
+      <h1>Tus finanzas, por fin <span id="rot">claras</span></h1>
       <p class="lead">Recibe en tu correo consejos simples para organizar tus gastos, ahorrar más y tomar mejores decisiones con tu dinero.</p>
 
       <div class="topics" id="topics">
@@ -160,7 +229,7 @@
     <div class="mock">
       <div class="chip c1" id="chip1">🎉 ¡Meta cumplida!</div>
       <div class="phone">
-        <small>Ahorro del mes</small>
+        <small><i class="live"></i> Ahorro del mes</small>
         <div class="big"><b>$</b> <span id="mockSave">450.000</span></div>
         <div class="bars" id="bars">
           <div style="height:35%" data-m="Jun"></div><div style="height:55%" data-m="Jul"></div><div style="height:42%" data-m="Ago"></div>
@@ -175,13 +244,15 @@
   <svg class="wave" viewBox="0 0 1440 80" preserveAspectRatio="none"><path fill="#f8fafc" d="M0,48 C240,90 480,0 720,30 C960,60 1200,90 1440,40 L1440,80 L0,80 Z"/></svg>
 </header>
 
+<div class="ticker" aria-hidden="true"><div id="tk"></div></div>
+
 <section class="features">
-  <div class="f"><div class="ic" style="background:#ccfbf1;">📊</div><h3>Organiza tus gastos</h3><p>Aprende a ordenar tus ingresos y gastos con métodos fáciles que sí puedes seguir.</p></div>
-  <div class="f"><div class="ic" style="background:#fef3c7;">🐷</div><h3>Ideas para ahorrar</h3><p>Trucos prácticos para guardar dinero cada mes sin sentir que te sacrificas.</p></div>
-  <div class="f"><div class="ic" style="background:#ede9fe;">🎁</div><h3>Recursos gratis</h3><p>Plantillas, guías y herramientas exclusivas para quienes se suscriben.</p></div>
+  <div class="f rv" style="--a:linear-gradient(90deg,#14b8a6,#0f766e)"><div class="ic" style="background:#ccfbf1;">📊</div><h3>Organiza tus gastos</h3><p>Aprende a ordenar tus ingresos y gastos con métodos fáciles que sí puedes seguir.</p></div>
+  <div class="f rv" style="--a:linear-gradient(90deg,#fbbf24,#f97316)"><div class="ic" style="background:#fef3c7;">🐷</div><h3>Ideas para ahorrar</h3><p>Trucos prácticos para guardar dinero cada mes sin sentir que te sacrificas.</p></div>
+  <div class="f rv" style="--a:linear-gradient(90deg,#a78bfa,#8b5cf6)"><div class="ic" style="background:#ede9fe;">🎁</div><h3>Recursos gratis</h3><p>Plantillas, guías y herramientas exclusivas para quienes se suscriben.</p></div>
 </section>
 
-<section class="calc" aria-labelledby="calcT">
+<section class="calc rv" aria-labelledby="calcT">
   <div class="calc-in">
     <div>
       <h2 id="calcT">Pruébalo: la regla 50/30/20</h2>
@@ -191,20 +262,23 @@
       <input type="range" id="income" min="1000000" max="10000000" step="100000" value="2500000">
     </div>
     <div>
-      <div class="split" id="split"></div>
+      <div class="ringwrap">
+        <div class="ring" aria-hidden="true"><div><span><b>20%</b>para ahorrar</span></div></div>
+        <div class="split" id="split"></div>
+      </div>
       <div class="year">Si ahorras eso cada mes, en un año tendrás <b id="yearSave"></b> 🎯</div>
     </div>
   </div>
 </section>
 
-<section class="faq">
+<section class="faq rv">
   <h2>Preguntas frecuentes</h2>
   <details><summary>¿Cuánto cuesta?</summary><p>Nada. El newsletter y los recursos son gratis.</p></details>
   <details><summary>¿Cada cuánto me escribirán?</summary><p>Una vez por semana, con un consejo corto que puedes aplicar el mismo día.</p></details>
   <details><summary>¿Puedo cancelar cuando quiera?</summary><p>Sí. Cada correo trae un enlace para cancelar tu suscripción.</p></details>
 </section>
 
-<section class="cta2">
+<section class="cta2 rv">
   <div>
     <h2>¿Listo para tener claridad con tu dinero?</h2>
     <p>Únete hoy y recibe tu correo de bienvenida al instante.</p>
@@ -235,77 +309,97 @@
   @media only screen and (max-width:600px) {
     .wrap { width:100% !important; }
     .pad { padding-left:22px !important; padding-right:22px !important; }
-    .h1 { font-size:26px !important; }
+    .h1 { font-size:27px !important; }
     .vote { display:block !important; margin:8px 0 !important; }
   }
 </style>
 </head>
-<body style="margin:0;padding:0;background-color:#eef2f6;">
+<body style="margin:0;padding:0;background-color:#e6f4f1;">
 
-<!-- Texto de vista previa (se ve junto al asunto en la bandeja) -->
-<div style="display:none;max-height:0;overflow:hidden;opacity:0;font-size:1px;line-height:1px;color:#eef2f6;">Tu primer consejo para ordenar tu dinero ya está aquí 💚</div>
+<div style="display:none;max-height:0;overflow:hidden;opacity:0;font-size:1px;line-height:1px;color:#e6f4f1;">Tu primer consejo para ordenar tu dinero ya está aquí 💚</div>
 
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#eef2f6" style="background-color:#eef2f6;">
-  <tr><td align="center" style="padding:28px 12px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#e6f4f1" style="background-color:#e6f4f1;">
+  <tr><td align="center" style="padding:30px 12px;">
 
-    <table role="presentation" class="wrap" width="560" cellpadding="0" cellspacing="0" border="0" style="width:560px;max-width:560px;background-color:#ffffff;border-radius:20px;overflow:hidden;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+    <table role="presentation" class="wrap" width="560" cellpadding="0" cellspacing="0" border="0" style="width:560px;max-width:560px;background-color:#ffffff;border-radius:24px;overflow:hidden;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;box-shadow:0 12px 40px rgba(15,118,110,.18);">
 
       <!-- Encabezado -->
-      <tr><td align="center" bgcolor="#0f766e" style="background-color:#0f766e;padding:30px 24px;">
-        <div style="font-size:26px;font-weight:bold;color:#ffffff;letter-spacing:.3px;">Cuenta Clara</div>
-        <div style="margin-top:6px;font-size:13px;color:#ccfbf1;">Finanzas simples</div>
+      <tr><td align="center" bgcolor="#0f766e" style="background-color:#0f766e;background-image:linear-gradient(135deg,#0b5d57 0%,#0f766e 50%,#14b8a6 100%);padding:34px 24px 64px 24px;">
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+          <td align="center" valign="middle" width="44" height="44" bgcolor="#ffffff" style="width:44px;height:44px;background-color:#ffffff;border-radius:14px;font-size:24px;font-weight:bold;color:#0f766e;">C</td>
+          <td valign="middle" style="padding-left:12px;font-size:26px;font-weight:bold;color:#ffffff;letter-spacing:.3px;">Cuenta Clara</td>
+        </tr></table>
+        <div style="margin-top:22px;font-size:13px;color:#ccfbf1;background-color:#12857c;display:inline-block;padding:6px 16px;border-radius:999px;">💌 Newsletter gratuito</div>
       </td></tr>
 
-      <!-- Bienvenida -->
-      <tr><td align="center" class="pad" style="padding:38px 40px 6px 40px;">
-        <div style="font-size:44px;line-height:1;">🎉</div>
-        <h1 class="h1" style="margin:14px 0 0 0;font-size:30px;line-height:1.2;color:#0f172a;font-weight:bold;">¡Bienvenido a bordo!</h1>
-        <p style="margin:12px 0 0 0;font-size:16px;line-height:1.6;color:#475569;">Ya estás suscrito con<br><strong style="color:#0f766e;">{{to_email}}</strong></p>
+      <!-- Tarjeta de bienvenida que sube sobre el encabezado -->
+      <tr><td align="center" class="pad" style="padding:0 28px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:-36px;">
+          <tr><td align="center" bgcolor="#ffffff" style="background-color:#ffffff;border-radius:22px;padding:30px 24px 24px 24px;box-shadow:0 10px 30px rgba(15,23,42,.12);">
+            <div style="font-size:46px;line-height:1;">🎉</div>
+            <h1 class="h1" style="margin:14px 0 0 0;font-size:30px;line-height:1.2;color:#0f172a;font-weight:800;">¡Bienvenido a bordo!</h1>
+            <p style="margin:12px 0 0 0;font-size:16px;line-height:1.6;color:#475569;">Ya estás suscrito con<br><span style="display:inline-block;margin-top:6px;background-color:#f0fdfa;color:#0f766e;font-weight:bold;padding:6px 16px;border-radius:999px;">{{to_email}}</span></p>
+          </td></tr>
+        </table>
       </td></tr>
 
-      <!-- Temas elegidos -->
-      <tr><td align="center" class="pad" style="padding:18px 40px 4px 40px;">
-        <p style="margin:0;font-size:14px;line-height:1.6;color:#64748b;">Recibirás contenido sobre</p>
-        <p style="margin:4px 0 0 0;font-size:16px;line-height:1.5;color:#0f172a;font-weight:bold;">{{topics}}</p>
+      <!-- Temas -->
+      <tr><td align="center" class="pad" style="padding:26px 40px 0 40px;">
+        <div style="font-size:14px;color:#64748b;">Elegiste recibir contenido sobre</div>
+        <div style="margin-top:8px;font-size:17px;font-weight:bold;color:#0f172a;line-height:1.5;">{{topics}}</div>
       </td></tr>
 
-      <!-- Primer consejo -->
-      <tr><td class="pad" style="padding:26px 40px 6px 40px;">
+      <!-- Consejo con barra 50/30/20 -->
+      <tr><td class="pad" style="padding:28px 40px 4px 40px;">
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-          <tr><td bgcolor="#f0fdfa" style="background-color:#f0fdfa;border-left:4px solid #14b8a6;border-radius:10px;padding:18px 20px;">
-            <div style="font-size:13px;font-weight:bold;color:#0f766e;">Tu primer consejo</div>
-            <div style="margin-top:6px;font-size:16px;line-height:1.6;color:#0f172a;">Reparte tu ingreso así: <strong>50%</strong> para lo necesario, <strong>30%</strong> para tus gustos y <strong>20%</strong> para ahorrar.</div>
+          <tr><td bgcolor="#f8fafc" style="background-color:#f8fafc;border:1px solid #e2e8f0;border-radius:18px;padding:22px 20px;">
+            <div style="font-size:13px;font-weight:bold;color:#0f766e;">💡 Tu primer consejo</div>
+            <div style="margin-top:6px;font-size:16px;line-height:1.55;color:#0f172a;font-weight:bold;">Reparte tu ingreso con la regla 50/30/20</div>
+
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:16px;border-radius:99px;overflow:hidden;">
+              <tr>
+                <td width="50%" height="14" bgcolor="#0f766e" style="background-color:#0f766e;height:14px;font-size:1px;line-height:1px;">&nbsp;</td>
+                <td width="30%" height="14" bgcolor="#f59e0b" style="background-color:#f59e0b;height:14px;font-size:1px;line-height:1px;">&nbsp;</td>
+                <td width="20%" height="14" bgcolor="#8b5cf6" style="background-color:#8b5cf6;height:14px;font-size:1px;line-height:1px;">&nbsp;</td>
+              </tr>
+              <tr>
+                <td style="padding-top:8px;font-size:13px;color:#0f766e;font-weight:bold;">50% 🏠<br><span style="font-weight:normal;color:#64748b;">Necesidades</span></td>
+                <td style="padding-top:8px;font-size:13px;color:#b45309;font-weight:bold;">30% 🎉<br><span style="font-weight:normal;color:#64748b;">Gustos</span></td>
+                <td style="padding-top:8px;font-size:13px;color:#6d28d9;font-weight:bold;">20% 🐷<br><span style="font-weight:normal;color:#64748b;">Ahorro</span></td>
+              </tr>
+            </table>
           </td></tr>
         </table>
       </td></tr>
 
       <!-- Votación -->
-      <tr><td align="center" class="pad" style="padding:30px 40px 6px 40px;">
+      <tr><td align="center" class="pad" style="padding:30px 40px 4px 40px;">
         <p style="margin:0 0 12px 0;font-size:16px;font-weight:bold;color:#0f172a;">¿Qué quieres aprender primero?</p>
-        <a class="vote" href="https://samuelrb17.github.io/cuenta-Clara/#voto-gastos" style="display:inline-block;margin:4px;background-color:#f0fdfa;color:#0f766e;border:1px solid #99f6e4;text-decoration:none;font-size:14px;font-weight:bold;padding:10px 18px;border-radius:999px;">📊 Gastos</a>
-        <a class="vote" href="https://samuelrb17.github.io/cuenta-Clara/#voto-ahorro" style="display:inline-block;margin:4px;background-color:#fffbeb;color:#b45309;border:1px solid #fde68a;text-decoration:none;font-size:14px;font-weight:bold;padding:10px 18px;border-radius:999px;">🐷 Ahorro</a>
-        <a class="vote" href="https://samuelrb17.github.io/cuenta-Clara/#voto-deudas" style="display:inline-block;margin:4px;background-color:#f5f3ff;color:#6d28d9;border:1px solid #ddd6fe;text-decoration:none;font-size:14px;font-weight:bold;padding:10px 18px;border-radius:999px;">💳 Deudas</a>
+        <a class="vote" href="https://samuelrb17.github.io/cuenta-Clara/#voto-gastos" style="display:inline-block;margin:4px;background-color:#f0fdfa;color:#0f766e;border:1px solid #99f6e4;text-decoration:none;font-size:14px;font-weight:bold;padding:11px 20px;border-radius:999px;">📊 Gastos</a>
+        <a class="vote" href="https://samuelrb17.github.io/cuenta-Clara/#voto-ahorro" style="display:inline-block;margin:4px;background-color:#fffbeb;color:#b45309;border:1px solid #fde68a;text-decoration:none;font-size:14px;font-weight:bold;padding:11px 20px;border-radius:999px;">🐷 Ahorro</a>
+        <a class="vote" href="https://samuelrb17.github.io/cuenta-Clara/#voto-deudas" style="display:inline-block;margin:4px;background-color:#f5f3ff;color:#6d28d9;border:1px solid #ddd6fe;text-decoration:none;font-size:14px;font-weight:bold;padding:11px 20px;border-radius:999px;">💳 Deudas</a>
       </td></tr>
 
       <!-- Botón principal -->
-      <tr><td align="center" class="pad" style="padding:26px 40px 10px 40px;">
+      <tr><td align="center" class="pad" style="padding:26px 40px 8px 40px;">
         <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
-          <td align="center" bgcolor="#f59e0b" style="background-color:#f59e0b;border-radius:999px;">
-            <a href="https://samuelrb17.github.io/cuenta-Clara/" style="display:inline-block;padding:15px 36px;font-size:16px;font-weight:bold;color:#ffffff;text-decoration:none;border-radius:999px;">Probar la calculadora</a>
+          <td align="center" bgcolor="#f97316" style="background-color:#f59e0b;background-image:linear-gradient(135deg,#f59e0b,#f97316);border-radius:999px;box-shadow:0 8px 18px rgba(249,115,22,.35);">
+            <a href="https://samuelrb17.github.io/cuenta-Clara/" style="display:inline-block;padding:16px 38px;font-size:16px;font-weight:bold;color:#ffffff;text-decoration:none;border-radius:999px;">Probar la calculadora →</a>
           </td>
         </tr></table>
+        <div style="margin-top:12px;font-size:13px;color:#94a3b8;">Es gratis y toma menos de un minuto.</div>
       </td></tr>
 
       <!-- Despedida -->
-      <tr><td class="pad" style="padding:24px 40px 32px 40px;">
-        <div style="border-top:1px solid #e2e8f0;padding-top:20px;text-align:center;font-size:15px;line-height:1.6;color:#475569;">
+      <tr><td class="pad" style="padding:26px 40px 34px 40px;">
+        <div style="border-top:1px solid #e2e8f0;padding-top:22px;text-align:center;font-size:15px;line-height:1.7;color:#475569;">
           Nos alegra tenerte con nosotros. 💚<br>
           <strong style="color:#0f172a;">El equipo de Cuenta Clara</strong>
         </div>
       </td></tr>
 
       <!-- Pie -->
-      <tr><td align="center" bgcolor="#0f172a" style="background-color:#0f172a;padding:22px 28px;">
+      <tr><td align="center" bgcolor="#0f172a" style="background-color:#0f172a;padding:24px 28px;">
         <div style="font-size:12px;line-height:1.8;color:#94a3b8;">
           Recibes este correo porque te suscribiste en nuestra web.<br>
           Para cancelar, responde a este correo con la palabra CANCELAR.<br>
@@ -321,6 +415,23 @@
 </html>
 </script>
 
+<script>
+  // Pantalla de carga: mínimo 1.9 s y espera a que la página termine de cargar
+  (function () {
+    const ld = document.getElementById("loader"), tx = document.getElementById("ldTxt");
+    if (matchMedia("(prefers-reduced-motion:reduce)").matches) { ld.remove(); return; }
+    document.documentElement.style.overflow = "hidden";
+    const t0 = performance.now(), frases = ["Contando monedas…", "Ordenando tu presupuesto…", "Casi listo 💚"];
+    frases.forEach((f, i) => setTimeout(() => tx.textContent = f, i * 650));
+    function salir() {
+      ld.classList.add("done");
+      setTimeout(() => { ld.remove(); document.documentElement.style.overflow = ""; }, 900);
+    }
+    const listo = () => setTimeout(salir, Math.max(0, 1900 - (performance.now() - t0)));
+    document.readyState === "complete" ? listo() : addEventListener("load", listo);
+    setTimeout(salir, 4500); // seguro por si algo tarda demasiado
+  })();
+</script>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
   // ====== EMAILJS ======
@@ -333,10 +444,25 @@
 
   const $ = id => document.getElementById(id);
   const money = n => "$ " + Math.round(n).toLocaleString("es-CO");
+  const calm = matchMedia("(prefers-reduced-motion:reduce)").matches;
 
   // Toast
   let tt;
   function toast(t){ const el=$("toast"); el.textContent=t; el.classList.add("show"); clearTimeout(tt); tt=setTimeout(()=>el.classList.remove("show"),3500); }
+
+  // Palabra que cambia en el título
+  if (!calm) {
+    const words = ["claras","simples","en orden","bajo control"]; let wi = 0; const rot = $("rot");
+    setInterval(() => { rot.classList.add("out"); setTimeout(() => { wi = (wi+1)%words.length; rot.textContent = words[wi]; rot.classList.remove("out"); }, 350); }, 2800);
+  }
+
+  // Cinta de consejos
+  const tips = ["🐷 Ahorra primero, gasta después","📊 Lo que no se mide, no se mejora","💳 Paga primero la deuda más cara","🎯 Una meta clara vale más que mil intentos","☕ Los gastos hormiga también suman","📈 Empezar pequeño es empezar"];
+  $("tk").innerHTML = [...tips, ...tips, ...tips, ...tips].map(t => `<span>${t}</span>`).join("");
+
+  // Aparecer al hacer scroll
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold:.15 });
+  document.querySelectorAll(".rv").forEach(el => io.observe(el));
 
   // Temas elegidos -> campo oculto {{topics}}
   const chips = [...document.querySelectorAll(".topic")];
@@ -362,7 +488,6 @@
     const s = Math.round(save).toLocaleString("es-CO");
     $("mockSave").textContent = s;
     $("mockRow").textContent = "+$" + s;
-    // barras del teléfono: crecen hacia el ahorro actual
     const bars = [...document.querySelectorAll("#bars div")];
     const base = [.38,.58,.46,.72,.62,.95];
     const k = .55 + (inc-1e6)/9e6*.45;
@@ -375,7 +500,7 @@
   document.querySelectorAll("#bars div").forEach(b => b.addEventListener("click", () => toast("Ahorro de " + b.dataset.m + ": " + $("mockSave").textContent)));
 
   // Parallax suave de las burbujas (solo escritorio)
-  if (matchMedia("(hover:hover)").matches && !matchMedia("(prefers-reduced-motion:reduce)").matches) {
+  if (matchMedia("(hover:hover)").matches && !calm) {
     document.querySelector(".hero").addEventListener("mousemove", e => {
       const x=(e.clientX/innerWidth-.5), y=(e.clientY/innerHeight-.5);
       document.querySelectorAll(".blob").forEach((b,i)=> b.style.transform = `translate(${x*(i+1)*18}px,${y*(i+1)*18}px)`);
@@ -384,7 +509,7 @@
 
   // Confeti
   function confetti(){
-    if (matchMedia("(prefers-reduced-motion:reduce)").matches) return;
+    if (calm) return;
     const cv=$("confetti"), ctx=cv.getContext("2d"); cv.width=innerWidth; cv.height=innerHeight;
     const cols=["#14b8a6","#f59e0b","#f97316","#8b5cf6","#fde68a"];
     const ps=Array.from({length:110},()=>({x:innerWidth/2,y:innerHeight*.45,vx:(Math.random()-.5)*14,vy:Math.random()*-13-3,s:Math.random()*7+4,c:cols[Math.random()*5|0],r:Math.random()*6}));
